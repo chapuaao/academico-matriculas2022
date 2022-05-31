@@ -25,5 +25,12 @@ public class Aluno extends Pessoa {
 	}
 	
 	
+	//metodo construtor que precisa apenas de dois parametros
+	public Aluno (String pNome, long pNumeroInscricao) {
+		super(pNome);
+		this.numeroInscricao = pNumeroInscricao;
+		this.matriculas = new ArrayList<Matricula>();
+	}
+	
 	
 }

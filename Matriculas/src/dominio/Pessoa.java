@@ -30,6 +30,11 @@ public class Pessoa {
 		//this.id = 
 	}
 	
+	
+	public Pessoa(String pNome) {
+		this.nome = pNome;
+	}
+	
 	//metodo que calcula a idade
 	public int idade() {
 		if(this.dataNasc == null)

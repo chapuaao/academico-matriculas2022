@@ -20,9 +20,14 @@ public class Turma {
 		this.periodo = periodo;
 		this.matriculas = new ArrayList<Matricula>();
 	}
+
+	
+	public boolean atingiuOLimite() {
+		//return limite < matriculas.size();
+		return false;
+	}
 	
 	
-	///
 	
 	
 }
