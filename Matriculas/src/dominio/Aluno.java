@@ -7,7 +7,8 @@ import java.util.List;
 public class Aluno extends Pessoa {
 	
 	public long numeroInscricao;
-
+	
+	private int alturaCm;
 	// As matriculas do aluno em diferentes turmas
 	// e anos lectivos
 	public List<Matricula> matriculas;
@@ -32,5 +33,9 @@ public class Aluno extends Pessoa {
 		this.matriculas = new ArrayList<Matricula>();
 	}
 	
+	
+	public void setAlturaCm(int altura) {
+		
+	}
 	
 }

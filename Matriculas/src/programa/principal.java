@@ -47,6 +47,7 @@ public class principal {
 				matricularPrimeiraVez();
 				break;
 			case 4:
+				confirmarMatricula();
 				break;
 			case 0:
 				break;
@@ -94,12 +95,13 @@ public class principal {
 	public static void verTodasTurmas() {
 		System.out.println("1. VER TURMAS");
 
-		System.out.println("ORDEM --- " +
-				"ANO ACAD. --- " +
-				"ANO LECT. --- " +
-				"CURSO --- PERIODO");
-
 		if(todasTurmas.size() > 0) {
+			
+			System.out.println("ORDEM --- " +
+					"ANO ACAD. --- " +
+					"ANO LECT. --- " +
+					"CURSO --- PERIODO");
+			
 			for (int i = 0; i < todasTurmas.size(); i++) {
 				//aceder e exibir os dados
 				Turma t = todasTurmas.get(i);
@@ -129,22 +131,14 @@ public class principal {
 		System.out.println("3. MATRICULAR PRIMEIRA VEZ");
 
 		if(todasTurmas.size() > 0) {
-			verTodasTurmas();	//exibe a lista das turmas que existem
-
-			System.out.print("Escolha uma turma pelo numero de ordem: ");
-			int nOrdem = entrada.nextInt();		//ler a escolha do usuario
-
-			//pegamos a turma para matricular da lista todasTurmas
-			//atraves do metodo .get(posicao) da lista.
-			Turma turma = todasTurmas.get(nOrdem);
+			Turma turma = escolherTurma();
 
 			if(turma == null) {
 				System.out.println("A turma não foi encontrada. "
-						+ "A a matriucula nao pode ser realizada");
+						+ "A a matricula nao pode ser realizada");
 			} else if(turma.atingiuOLimite()){
 				System.out.println("A turma esta cheia.");
-			}
-			else {
+			} else {
 				System.out.print("Digite o nome do aluno: ");
 				String nome = entrada.next();
 
@@ -157,31 +151,112 @@ public class principal {
 				//realizar a matricula
 				//ler os dados da matricula
 				System.out.print("O estudente forneceu certificado? ");
-				boolean certificado = (entrada.next().equals("s"));
-				System.out.print("O estudante pagou pelo serviço? ");
-				boolean pagou = (entrada.next().equals("s"));
+				boolean certific = (entrada.next().equals("s"));
 				System.out.print("Media do certificado anterior: ");
 				float media = entrada.nextFloat();
-				//manipular o estado
-				String estado = "Normal";
-				if(!pagou) {	//se aluno nao pagou
-					estado = "Pagamento pendente";
-				}
-				//pegar a data no formato 2007-12-03T10:15:30
-				LocalDateTime data = LocalDateTime.now();
-
-				//instanciar a nova matricula
-				Matricula novaMatricula = new Matricula(certificado, pagou, 
-						media, estado, data, turma, aluno);
-				//adicionar a matricula na lista de matriculas da turma
-				turma.matriculas.add(novaMatricula);
-
-				//adicionar a matricula na lista de todas as matriculas
-				todasMatriculas.add(novaMatricula);
-				System.out.println("Matricula realizada com sucesso!");
+				
+				finalizarMatricula(certific, media, turma, aluno);
 			}
 		} 		
 	}
 
+		
+	private static void finalizarMatricula(boolean certificado, float media, 
+			Turma turma, Aluno aluno) {
+		
+		System.out.print("O estudante pagou pelo serviço? ");
+		boolean pagou = (entrada.next().equals("s"));
+		//manipular o estado
+		String estado = "Normal";
+		if(!pagou) {	//se aluno nao pagou
+			estado = "Pagamento pendente";
+		}
+		//pegar a data no formato 2007-12-03T10:15:30
+		LocalDateTime data = LocalDateTime.now();
 
+		//instanciar a nova matricula
+		Matricula novaMatricula = new Matricula(certificado, pagou, 
+				media, estado, data, turma, aluno);
+		//adicionar a matricula na lista de matriculas da turma
+		turma.matriculas.add(novaMatricula);
+
+		//adicionar a matricula na lista de todas as matriculas
+		todasMatriculas.add(novaMatricula);
+		System.out.println("Matricula realizada com sucesso!");
+	}
+	
+	
+	private static Turma escolherTurma() {
+		verTodasTurmas();	//exibe a lista das turmas que existem
+
+		System.out.print("Escolha uma turma pelo numero de ordem: ");
+		int nOrdem = entrada.nextInt();		//ler a escolha do usuario
+
+		//pegamos a turma para matricular da lista todasTurmas
+		//atraves do metodo .get(posicao) da lista.
+		return todasTurmas.get(nOrdem);
+	}
+	
+	
+	
+	
+	
+	public static void confirmarMatricula(){
+		System.out.println("4. CONFIRMAR MATRICULA");
+		
+		Turma turma = escolherTurma();
+		if(turma == null) {
+			System.out.println("A turma não foi encontrada. "
+					+ "A a confirmacao da matricula nao pode ser realizada");
+		} else if(turma.atingiuOLimite()){
+			System.out.println("A turma esta cheia.");
+		} else {
+			System.out.print("Informe o numero de matricula: ");
+			long nMatricula = entrada.nextLong();
+			
+			//
+			Aluno aluno = null;
+			for(Aluno a : todosAlunos) {
+				if(a.numeroInscricao == nMatricula) {
+					aluno = a;
+					break;
+				}
+			}
+			
+			if(aluno != null) {
+				finalizarMatricula(false, 0, turma, aluno);
+			} else {
+				System.out.println("Nenhum aluno encontrado");
+			}
+		}
+		
+	}
+	
+
+//	public String buscarAluno() {
+//		Aluno a = new Aluno("Rafael", 400);
+//		a.setAlturaCm(100);
+//		return a.nome + " - " + a.numeroInscricao;
+//	}
+	
+	
+	
+	
+	/**
+	 * TAREFA
+	 * 
+	 * Listar todas alunos
+	 * Anular matricula
+	 * 
+	 * 		Podem adicionar novas aopcoes no menu, se necessario
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

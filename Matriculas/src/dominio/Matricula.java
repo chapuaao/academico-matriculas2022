@@ -13,6 +13,7 @@ public class Matricula {
 	public Turma turma;
 	public Aluno aluno;
 	
+	//1
 	public Matricula(boolean certificado, boolean pagou, 
 			float mediaCertificado, String estado, 
 			LocalDateTime data, Turma turma, Aluno aluno) {
@@ -26,5 +27,14 @@ public class Matricula {
 		this.aluno = aluno;
 	}
 	
+	//2
+	public Matricula(boolean pagou, String estado, 
+			LocalDateTime data, Turma turma, Aluno aluno) {
+		this.pagou = pagou;
+		this.estado = estado;
+		this.data = data;
+		this.turma = turma;
+		this.aluno = aluno;
+	}
 	
 }
